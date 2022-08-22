@@ -1,4 +1,3 @@
-# coding=gbk
 #coding:utf-8
 import openpyxl
 import time
@@ -7,17 +6,17 @@ import os
 import PIL
 
 
-if not os.path.exists('./ÀîÀö'):
-    os.mkdir('./ÀîÀö')
+if not os.path.exists('./ï¿½ï¿½ï¿½ï¿½'):
+    os.mkdir('./ï¿½ï¿½ï¿½ï¿½')
 
-fl = os.listdir('./ÀîÀö/')
+fl = os.listdir('./ï¿½ï¿½ï¿½ï¿½/')
 
 for fname in fl:
-    deals = os.listdir('./ÀîÀö/{}'.format(fname))
+    deals = os.listdir('./ï¿½ï¿½ï¿½ï¿½/{}'.format(fname))
     for deal in deals:
         if deal.endswith('.txt'):
             continue
-        wb = openpyxl.load_workbook('./ÀîÀö/{}/{}'.format(fname, deal))
+        wb = openpyxl.load_workbook('./ï¿½ï¿½ï¿½ï¿½/{}/{}'.format(fname, deal))
         sheet = wb.active
         row = 2
         all = 0
@@ -26,9 +25,9 @@ for fname in fl:
             sheet['f{}'.format(row)] = '%.2f' % sum
             all += sum
             row += 1
-        sheet['e{}'.format(row)] = '×Ü¼Æ£º'
+        sheet['e{}'.format(row)] = 'ï¿½Ü¼Æ£ï¿½'
         sheet['f{}'.format(row)] = '%.2f' % all
-        wb.save('./ÀîÀö/{}/{}'.format(fname, deal))
+        wb.save('./ï¿½ï¿½ï¿½ï¿½/{}/{}'.format(fname, deal))
         wb.close()
 
 
@@ -37,21 +36,21 @@ r_height = 150
 
 t = time.strftime('%Y.%m.%d',  time.localtime())
 y, m, d = t.split('.')
-if not os.path.exists('./ÀîÀö/{}Äê'.format(y)):
-    os.mkdir('./ÀîÀö/{}Äê'.format(y))
-if not os.path.exists('./ÀîÀö/{}Äê/{}ÔÂ.xlsx'.format(y, m)):
+if not os.path.exists('./ï¿½ï¿½ï¿½ï¿½/{}ï¿½ï¿½'.format(y)):
+    os.mkdir('./ï¿½ï¿½ï¿½ï¿½/{}ï¿½ï¿½'.format(y))
+if not os.path.exists('./ï¿½ï¿½ï¿½ï¿½/{}ï¿½ï¿½/{}ï¿½ï¿½.xlsx'.format(y, m)):
     wb = openpyxl.Workbook()
     sheet = wb.active
-    sheet['a1'] = 'ÈÕÆÚ'
+    sheet['a1'] = 'ï¿½ï¿½ï¿½ï¿½'
     sheet['b1'] = 'Í¼Æ¬'
-    sheet['c1'] = '¿îºÅ'
-    sheet['d1'] = 'µ¥¼Û'
-    sheet['e1'] = '¼þÊý'
-    sheet['f1'] = '×Ü¼Û'
-    sheet['g1'] = '¿îÊ½'
-    sheet['h1'] = '±¸×¢'
+    sheet['c1'] = 'ï¿½ï¿½ï¿½'
+    sheet['d1'] = 'ï¿½ï¿½ï¿½ï¿½'
+    sheet['e1'] = 'ï¿½ï¿½ï¿½ï¿½'
+    sheet['f1'] = 'ï¿½Ü¼ï¿½'
+    sheet['g1'] = 'ï¿½ï¿½Ê½'
+    sheet['h1'] = 'ï¿½ï¿½×¢'
 else:
-    wb = openpyxl.load_workbook('./ÀîÀö/{}Äê/{}ÔÂ.xlsx'.format(y, m))
+    wb = openpyxl.load_workbook('./ï¿½ï¿½ï¿½ï¿½/{}ï¿½ï¿½/{}ï¿½ï¿½.xlsx'.format(y, m))
     sheet = wb.active
 
 sheet.column_dimensions['B'].width = c_width
@@ -65,19 +64,19 @@ while sheet['a{}'.format(row)].value != None:
     row += 1
 
 while 1:
-    img = input('Í¼Æ¬,ÊäÈë q ÍË³ö\n>')[1:-1]
+    img = input('Í¼Æ¬,ï¿½ï¿½ï¿½ï¿½ q ï¿½Ë³ï¿½\n>')[1:-1]
     if img == '':
         break
     while not os.path.exists(img):
-        img = input('Í¼Æ¬²»´æÔÚ£¬ÇëÖØÐÂ´«Èë\n>')[1:-1]
-    kuanhao = input('¿îºÅ\n>')
-    price = float(input('µ¥¼Û\n>'))
+        img = input('Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½Ú£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½ï¿½ï¿½\n>')[1:-1]
+    kuanhao = input('ï¿½ï¿½ï¿½\n>')
+    price = float(input('ï¿½ï¿½ï¿½ï¿½\n>'))
     price = '%.2f' % (price)
-    num = float(input('ÊýÁ¿\n>'))
+    num = float(input('ï¿½ï¿½ï¿½ï¿½\n>'))
     num = '%.2f' % (num)
     sum = '%.2f' % (float(price) * float(num))
-    model = input('¿îÊ½\n>')
-    ad = input('±¸×¢\n>')
+    model = input('ï¿½ï¿½Ê½\n>')
+    ad = input('ï¿½ï¿½×¢\n>')
 
     img = Image(img)
     sheet.row_dimensions[row].height = r_height
@@ -92,24 +91,24 @@ while 1:
     sheet['h{}'.format(row)] = ad
     all += float(sum)
     row += 1
-sheet['e{}'.format(row)] = '×Ü¼Æ£º'
+sheet['e{}'.format(row)] = 'ï¿½Ü¼Æ£ï¿½'
 sheet['f{}'.format(row)] = '%.2f' % all
-print('{}ÔÂ×Ü¼Æ{} Ôª'.format(m, all))
-wb.save('./ÀîÀö/{}Äê/{}ÔÂ.xlsx'.format(y, m))
+print('{}ï¿½ï¿½ï¿½Ü¼ï¿½{} Ôª'.format(m, all))
+wb.save('./ï¿½ï¿½ï¿½ï¿½/{}ï¿½ï¿½/{}ï¿½ï¿½.xlsx'.format(y, m))
 
-fl = os.listdir('./ÀîÀö/{}Äê'.format(y))
+fl = os.listdir('./ï¿½ï¿½ï¿½ï¿½/{}ï¿½ï¿½'.format(y))
 yearall = 0
 for fname in fl:
     if fname.endswith('xlsx'):
-        workspace = openpyxl.load_workbook('./ÀîÀö/{}Äê/{}'.format(y, fname))
+        workspace = openpyxl.load_workbook('./ï¿½ï¿½ï¿½ï¿½/{}ï¿½ï¿½/{}'.format(y, fname))
         sheet = workspace.active
         j = 2
         while sheet['e{}'.format(j)].value != None:
             j += 1
         yearall += float(sheet['f{}'.format(j-1)].value)
-f = open('./ÀîÀö/{}Äê/È«Äê×Ü¼Æ.txt'.format(y), 'w')
-f.write('{} £¤'.format(yearall))
-print('È«Äê×Ü¼Æ{} Ôª'.format(yearall))
-input('°´ÏÂ»Ø³µÍË³ö³ÌÐò\n')
+f = open('./ï¿½ï¿½ï¿½ï¿½/{}ï¿½ï¿½/È«ï¿½ï¿½ï¿½Ü¼ï¿½.txt'.format(y), 'w')
+f.write('{} ï¿½ï¿½'.format(yearall))
+print('È«ï¿½ï¿½ï¿½Ü¼ï¿½{} Ôª'.format(yearall))
+input('ï¿½ï¿½ï¿½Â»Ø³ï¿½ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½\n')
 
 f.close()
