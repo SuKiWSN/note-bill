@@ -6,17 +6,17 @@ import os
 import PIL
 
 
-if not os.path.exists('./����'):
-    os.mkdir('./����')
+if not os.path.exists('./清河'):
+    os.mkdir('./清河')
 
-fl = os.listdir('./����/')
+fl = os.listdir('./清河/')
 
 for fname in fl:
-    deals = os.listdir('./����/{}'.format(fname))
+    deals = os.listdir('./清河/{}'.format(fname))
     for deal in deals:
         if deal.endswith('.txt'):
             continue
-        wb = openpyxl.load_workbook('./����/{}/{}'.format(fname, deal))
+        wb = openpyxl.load_workbook('./清河/{}/{}'.format(fname, deal))
         sheet = wb.active
         row = 2
         all = 0
@@ -25,9 +25,9 @@ for fname in fl:
             sheet['f{}'.format(row)] = '%.2f' % sum
             all += sum
             row += 1
-        sheet['e{}'.format(row)] = '�ܼƣ�'
+        sheet['e{}'.format(row)] = '总计'
         sheet['f{}'.format(row)] = '%.2f' % all
-        wb.save('./����/{}/{}'.format(fname, deal))
+        wb.save('./清河/{}/{}'.format(fname, deal))
         wb.close()
 
 
@@ -36,21 +36,21 @@ r_height = 150
 
 t = time.strftime('%Y.%m.%d',  time.localtime())
 y, m, d = t.split('.')
-if not os.path.exists('./����/{}��'.format(y)):
-    os.mkdir('./����/{}��'.format(y))
-if not os.path.exists('./����/{}��/{}��.xlsx'.format(y, m)):
+if not os.path.exists('./清河/{}年'.format(y)):
+    os.mkdir('./清河/{}年'.format(y))
+if not os.path.exists('./清河/{}年/{}月.xlsx'.format(y, m)):
     wb = openpyxl.Workbook()
     sheet = wb.active
-    sheet['a1'] = '����'
-    sheet['b1'] = 'ͼƬ'
-    sheet['c1'] = '���'
-    sheet['d1'] = '����'
-    sheet['e1'] = '����'
-    sheet['f1'] = '�ܼ�'
-    sheet['g1'] = '��ʽ'
-    sheet['h1'] = '��ע'
+    sheet['a1'] = '日期'
+    sheet['b1'] = '图片'
+    sheet['c1'] = '款号'
+    sheet['d1'] = '单价'
+    sheet['e1'] = '件数'
+    sheet['f1'] = '总价'
+    sheet['g1'] = '款式'
+    sheet['h1'] = '备注'
 else:
-    wb = openpyxl.load_workbook('./����/{}��/{}��.xlsx'.format(y, m))
+    wb = openpyxl.load_workbook('./清河/{}年/{}月.xlsx'.format(y, m))
     sheet = wb.active
 
 sheet.column_dimensions['B'].width = c_width
@@ -64,19 +64,19 @@ while sheet['a{}'.format(row)].value != None:
     row += 1
 
 while 1:
-    img = input('ͼƬ,���� q �˳�\n>')[1:-1]
+    img = input('图片，输入 q 退出\n>')[1:-1]
     if img == '':
         break
     while not os.path.exists(img):
-        img = input('ͼƬ�����ڣ������´���\n>')[1:-1]
-    kuanhao = input('���\n>')
-    price = float(input('����\n>'))
+        img = input('图片不存在，请重新输入\n>')[1:-1]
+    kuanhao = input('款号\n>')
+    price = float(input('单价\n>'))
     price = '%.2f' % (price)
-    num = float(input('����\n>'))
+    num = float(input('数量\n>'))
     num = '%.2f' % (num)
     sum = '%.2f' % (float(price) * float(num))
-    model = input('��ʽ\n>')
-    ad = input('��ע\n>')
+    model = input('款式\n>')
+    ad = input('备注\n')
 
     img = Image(img)
     sheet.row_dimensions[row].height = r_height
@@ -91,24 +91,24 @@ while 1:
     sheet['h{}'.format(row)] = ad
     all += float(sum)
     row += 1
-sheet['e{}'.format(row)] = '�ܼƣ�'
+sheet['e{}'.format(row)] = '总计'
 sheet['f{}'.format(row)] = '%.2f' % all
-print('{}���ܼ�{} Ԫ'.format(m, all))
-wb.save('./����/{}��/{}��.xlsx'.format(y, m))
+print('{}月总计{} Ԫ'.format(m, all))
+wb.save('./清河/{}年/{}月.xlsx'.format(y, m))
 
-fl = os.listdir('./����/{}��'.format(y))
+fl = os.listdir('./清河/{}年'.format(y))
 yearall = 0
 for fname in fl:
     if fname.endswith('xlsx'):
-        workspace = openpyxl.load_workbook('./����/{}��/{}'.format(y, fname))
+        workspace = openpyxl.load_workbook('./清河/{}年/{}'.format(y, fname))
         sheet = workspace.active
         j = 2
         while sheet['e{}'.format(j)].value != None:
             j += 1
         yearall += float(sheet['f{}'.format(j-1)].value)
-f = open('./����/{}��/ȫ���ܼ�.txt'.format(y), 'w')
-f.write('{} ��'.format(yearall))
-print('ȫ���ܼ�{} Ԫ'.format(yearall))
-input('���»س��˳�����\n')
+f = open('./清河/{}年/全年总计.txt'.format(y), 'w')
+f.write('{} ￥'.format(yearall))
+print('全年总计{} 元'.format(yearall))
+input('按下回车退出程序\n')
 
 f.close()
