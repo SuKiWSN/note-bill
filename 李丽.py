@@ -93,7 +93,7 @@ while 1:
     row += 1
 sheet['e{}'.format(row)] = '总计'
 sheet['f{}'.format(row)] = '%.2f' % all
-print('{}月总计{} Ԫ'.format(m, all))
+print('{}月总计{} 元'.format(m, all))
 wb.save('./清河/{}年/{}月.xlsx'.format(y, m))
 
 fl = os.listdir('./清河/{}年'.format(y))
