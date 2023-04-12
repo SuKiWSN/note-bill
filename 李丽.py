@@ -6,28 +6,32 @@ import os
 import PIL
 
 
-if not os.path.exists('./清河'):
-    os.mkdir('./清河')
+if not os.path.exists('./张星若'):
+    os.mkdir('./张星若')
 
-fl = os.listdir('./清河/')
+fl = os.listdir('./张星若/')
 
 for fname in fl:
-    deals = os.listdir('./清河/{}'.format(fname))
+    if not fname.startswith('.'):
+        deals = os.listdir('./张星若/{}'.format(fname))
+    else:
+        continue
     for deal in deals:
         if deal.endswith('.txt'):
             continue
-        wb = openpyxl.load_workbook('./清河/{}/{}'.format(fname, deal))
+        wb = openpyxl.load_workbook('./张星若/{}/{}'.format(fname, deal))
         sheet = wb.active
         row = 2
         all = 0
         while sheet['a{}'.format(str(row))].value != None:
+            print(deal, row)
             sum = float(sheet['d{}'.format(row)].value) * float(sheet['e{}'.format(row)].value)
             sheet['f{}'.format(row)] = '%.2f' % sum
             all += sum
             row += 1
         sheet['e{}'.format(row)] = '总计'
         sheet['f{}'.format(row)] = '%.2f' % all
-        wb.save('./清河/{}/{}'.format(fname, deal))
+        wb.save('./张星若/{}/{}'.format(fname, deal))
         wb.close()
 
 
@@ -36,9 +40,9 @@ r_height = 150
 
 t = time.strftime('%Y.%m.%d',  time.localtime())
 y, m, d = t.split('.')
-if not os.path.exists('./清河/{}年'.format(y)):
-    os.mkdir('./清河/{}年'.format(y))
-if not os.path.exists('./清河/{}年/{}月.xlsx'.format(y, m)):
+if not os.path.exists('./张星若/{}年'.format(y)):
+    os.mkdir('./张星若/{}年'.format(y))
+if not os.path.exists('./张星若/{}年/{}月.xlsx'.format(y, m)):
     wb = openpyxl.Workbook()
     sheet = wb.active
     sheet['a1'] = '日期'
@@ -50,7 +54,7 @@ if not os.path.exists('./清河/{}年/{}月.xlsx'.format(y, m)):
     sheet['g1'] = '款式'
     sheet['h1'] = '备注'
 else:
-    wb = openpyxl.load_workbook('./清河/{}年/{}月.xlsx'.format(y, m))
+    wb = openpyxl.load_workbook('./张星若/{}年/{}月.xlsx'.format(y, m))
     sheet = wb.active
 
 sheet.column_dimensions['B'].width = c_width
@@ -94,19 +98,19 @@ while 1:
 sheet['e{}'.format(row)] = '总计'
 sheet['f{}'.format(row)] = '%.2f' % all
 print('{}月总计{} 元'.format(m, all))
-wb.save('./清河/{}年/{}月.xlsx'.format(y, m))
+wb.save('./张星若/{}年/{}月.xlsx'.format(y, m))
 
-fl = os.listdir('./清河/{}年'.format(y))
+fl = os.listdir('./张星若/{}年'.format(y))
 yearall = 0
 for fname in fl:
     if fname.endswith('xlsx'):
-        workspace = openpyxl.load_workbook('./清河/{}年/{}'.format(y, fname))
+        workspace = openpyxl.load_workbook('./张星若/{}年/{}'.format(y, fname))
         sheet = workspace.active
         j = 2
         while sheet['e{}'.format(j)].value != None:
             j += 1
         yearall += float(sheet['f{}'.format(j-1)].value)
-f = open('./清河/{}年/全年总计.txt'.format(y), 'w')
+f = open('./张星若/{}年/全年总计.txt'.format(y), 'w')
 f.write('{} ￥'.format(yearall))
 print('全年总计{} 元'.format(yearall))
 input('按下回车退出程序\n')
